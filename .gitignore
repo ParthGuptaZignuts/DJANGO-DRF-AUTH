@@ -1,0 +1,51 @@
+# Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Django-specific files
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+db.sqlite3
+
+# Virtual environment directories
+venv/
+env/
+
+# .env file for environment variables
+.env
+
+# Media files
+/media/
+
+# Static files
+/static/
+
+# PyCharm settings
+.idea/
+
+# VSCode settings
+.vscode/
+
+# Coverage reports
+.coverage
+.coverage.*
+nosetests.xml
+pytest.xml
+*.coveragerc
+
+# Django secret key
+secret_key.txt
+
+# MySQL database files (if using MySQL)
+*.sql
+*.dump
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
