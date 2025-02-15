@@ -34,9 +34,12 @@ Ensure you have Python 3.9 or higher installed. You can download Python from [ht
     macOS/Linux:
     source venv/bin/activate
 
-3. **Install dependencies:**
+3. **Install dependencies and get the django setup key and paste it into the .env file :**
     ```bash
     pip install -r requirements.txt
+    
+    cp env.example .env
+    python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 
 4. **Database Migrations:**
     ```bash 

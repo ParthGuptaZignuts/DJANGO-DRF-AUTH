@@ -157,3 +157,6 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256', 
     'SIGNING_KEY': 'your-secret-key-here',  # Set your secret key (use a strong key)
 }
+
+# Custom User Model which should be used
+AUTH_USER_MODEL = 'authentication.User'
