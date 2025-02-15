@@ -6,7 +6,9 @@ from django.contrib.auth import authenticate
 
 from api_endpoints.response import success_response, error_response
 from api_endpoints.renderers import UserRenderer
-from authentication.serializers import UserRegistrationSerializer, UserLoginSerializer
+from authentication.serializers import UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer
+
+from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['GET'])
@@ -82,4 +84,20 @@ class UserLoginView(APIView):
             message="Login Failed",
             errors=serializer.errors,
             code=status.HTTP_400_BAD_REQUEST
+        )
+
+
+class UserProfileView(APIView):
+    """
+    Handles retrieving the authenticated user's profile.
+    """
+    renderer_classes = [UserRenderer]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserProfileSerializer(request.user)
+        return success_response(
+            message="User profile fetched successfully",
+            data=serializer.data,
+            code=status.HTTP_200_OK
         )
