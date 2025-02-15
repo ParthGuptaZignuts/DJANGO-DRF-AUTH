@@ -36,4 +36,33 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
-    fields = ['id', 'email', 'name']
+    fields = ['id', 'email', 'name', 'tc']
+
+class UserChangePasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(
+        max_length=255, 
+        style={'input_type': 'password'}, 
+        write_only=True
+    )
+    confirm_password = serializers.CharField(
+        max_length=255, 
+        style={'input_type': 'password'}, 
+        write_only=True
+    )
+
+    class Meta:
+        fields = ['password', 'confirm_password']
+
+    def validate(self, attrs):
+        password = attrs.get('password')
+        confirm_password = attrs.get('confirm_password')
+        if password != confirm_password:
+            raise serializers.ValidationError({"confirm_password": "Passwords do not match"})
+        return attrs  
+
+    def save(self, **kwargs):
+        """Explicitly update the user's password"""
+        user = self.context.get('user')
+        user.set_password(self.validated_data['password'])
+        user.save()
+        return user

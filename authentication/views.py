@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 
 from api_endpoints.response import success_response, error_response
 from api_endpoints.renderers import UserRenderer
-from authentication.serializers import UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer
+from authentication.serializers import UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer , UserChangePasswordSerializer
 
 from rest_framework.permissions import IsAuthenticated
 
@@ -100,4 +100,25 @@ class UserProfileView(APIView):
             message="User profile fetched successfully",
             data=serializer.data,
             code=status.HTTP_200_OK
+        )
+    
+class UserChangePasswordView(APIView):
+    """
+    Handles user password change.
+    """
+    renderer_classes = [UserRenderer]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = UserChangePasswordSerializer(data=request.data, context={'user': request.user})
+        if serializer.is_valid():
+            serializer.save()
+            return success_response(
+                message="Password changed successfully",
+                code=status.HTTP_200_OK
+            )
+        return error_response(
+            message="Password change failed",
+            errors=serializer.errors,
+            code=status.HTTP_400_BAD_REQUEST
         )
