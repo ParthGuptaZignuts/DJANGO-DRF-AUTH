@@ -24,6 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 load_dotenv()
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+FRONTEND_URL = os.getenv('FRONTEND_URL')
+
+# Default value for FRONTEND_URL if not set in .env (optional)
+if not FRONTEND_URL:
+    FRONTEND_URL = 'http://localhost:8000'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -66,7 +71,7 @@ ROOT_URLCONF = "jwt_auth.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -160,3 +165,15 @@ SIMPLE_JWT = {
 
 # Custom User Model which should be used
 AUTH_USER_MODEL = 'authentication.User'
+
+# Reset Password link should be valid 
+PASSWORD_RESET_TIMEOUT = 900           #900 seconds = 15 minutes
+
+
+# EMAIL CONFIGURATION
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS')
+EMAIL_USE_TLS = True
