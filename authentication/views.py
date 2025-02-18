@@ -151,3 +151,39 @@ class UserPasswordResetView(APIView):
             message="Password reset successfully",
             code=status.HTTP_200_OK
         )
+
+class UserLogoutView(APIView):
+    """
+    Handles user logout by blacklisting the refresh token.
+    """
+    
+    permission_classes = [IsAuthenticated]
+    renderer_classes = [UserRenderer] 
+
+    def post(self, request, format=None):
+        refresh_token = request.data.get("refresh")
+        print(refresh_token)
+
+        if not refresh_token:
+            return error_response(
+                message="Refresh token is required",
+                errors={"refresh": "This field is required."},
+                code=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            refresh_token_obj = RefreshToken(refresh_token)
+            print(refresh_token_obj)
+            refresh_token_obj.blacklist() 
+
+            return success_response(
+                message="Logout successfully",
+                code=status.HTTP_200_OK
+            )
+
+        except Exception as e:
+            return error_response(
+                message="Invalid or expired token.",
+                errors={"non_field_errors": "Invalid token."},
+                code=status.HTTP_401_UNAUTHORIZED
+            )

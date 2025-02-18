@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # simple jwt for authentication
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     # for cors headers
     'corsheaders',
     # custom app 
@@ -158,9 +159,9 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,  
-    'BLACKLIST_AFTER_ROTATION': True, 
+    'BLACKLIST_AFTER_ROTATION': False, 
     'ALGORITHM': 'HS256', 
-    'SIGNING_KEY': 'your-secret-key-here',  # Set your secret key (use a strong key)
+    'SIGNING_KEY': SECRET_KEY,  
 }
 
 # Custom User Model which should be used
