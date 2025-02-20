@@ -9,10 +9,12 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import os
-from dotenv import load_dotenv
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,12 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 load_dotenv()
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
-FRONTEND_URL = os.getenv('FRONTEND_URL')
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+FRONTEND_URL = os.getenv("FRONTEND_URL")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 
 # Default value for FRONTEND_URL if not set in .env (optional)
 if not FRONTEND_URL:
-    FRONTEND_URL = 'http://localhost:8000'
+    FRONTEND_URL = "http://localhost:8000"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,28 +42,37 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+# Django built-in apps
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # rest framework
-    'rest_framework',
-    # simple jwt for authentication
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
-    # for cors headers
-    'corsheaders',
-    # custom app 
-    'authentication',
 ]
+
+# Third-party apps
+THIRD_PARTY_APPS = [
+    "rest_framework",  # Django REST Framework
+    "rest_framework_simplejwt",  # Simple JWT authentication
+    "rest_framework_simplejwt.token_blacklist",  # JWT token blacklist
+    "corsheaders",  # CORS headers support
+    "rest_framework_social_oauth2",  # Social OAuth2 authentication
+]
+
+# Custom apps
+CUSTOM_APPS = [
+    "authentication",  # Custom authentication app
+    "GoogleAuth",  # Custom Google authentication app
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -72,7 +85,7 @@ ROOT_URLCONF = "jwt_auth.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -144,37 +157,47 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-# Rest framework settings 
+# Rest framework settings
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',  # Or other permission classes based on your needs
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",  # Or other permission classes based on your needs
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Use JWT for authentication
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",  # Use JWT for authentication
     ],
 }
 
 # Simple JWT settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,  
-    'BLACKLIST_AFTER_ROTATION': False, 
-    'ALGORITHM': 'HS256', 
-    'SIGNING_KEY': SECRET_KEY,  
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
 }
 
 # Custom User Model which should be used
-AUTH_USER_MODEL = 'authentication.User'
+AUTH_USER_MODEL = "authentication.User"
 
-# Reset Password link should be valid 
-PASSWORD_RESET_TIMEOUT = 900           #900 seconds = 15 minutes
+# Reset Password link should be valid
+PASSWORD_RESET_TIMEOUT = 900  # 900 seconds = 15 minutes
 
 
 # EMAIL CONFIGURATION
-EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.getenv('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS')
+EMAIL_HOST_USER = os.getenv("EMAIL_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASS")
 EMAIL_USE_TLS = True
+
+
+# Google authentication settings
+AUTHENTICATION_BACKENDS = (
+    "social_core.backends.google.GoogleOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET

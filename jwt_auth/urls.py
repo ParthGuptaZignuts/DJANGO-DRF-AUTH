@@ -1,26 +1,22 @@
-"""
-URL configuration for jwt_auth project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
 from django.contrib import admin
-from django.urls import path,include
-from authentication.views import check_server
+from django.urls import include, path
 
+from authentication.views import check_server
+from GoogleAuth.views import GoogleLoginView
+
+# Admin panel URL configuration and Server Health check endpoint
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', check_server, name='check_server'),
+    path("", check_server, name="check_server"),
+]
+
+# API endpoint configurations
+urlpatterns += [
     path("api/", include("api_endpoints.api")),
+]
+
+# Authentication and social login for Sigin With Google URLs
+urlpatterns += [
+    path("auth/", include("social_django.urls")),
+    path("complete/google/", GoogleLoginView.as_view(), name="google-login"),
 ]
