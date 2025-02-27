@@ -5,13 +5,12 @@ A simple Django project using Django Rest Framework (DRF) with JWT authenticatio
 ## Table of Contents
 
 - [Installation](#installation)
-- [Setup](#setup)
 - [API Endpoints](#api-endpoints)
 - [To Integrate Your Gmail Account](#to-integrate-your-gmail-account) 
 - [Integrating Google Sign-In with Django](#integrating-google-sign-in-with-django)
 - [Redis Setup and Testing](#redis-setup-and-testing)
 
-## Installation
+# Installation
 
 ### Prerequisites
 
@@ -62,7 +61,7 @@ Ensure you have Python 3.9 or higher installed. You can download Python from [ht
    ```bash
    python manage.py runserver
 
-### API Endpoints
+# API Endpoints
 GET /
 Simple health check endpoint.
 
@@ -73,7 +72,7 @@ Response:
 }
 ```
 
-### TO INTEGRATE YOUR GMAIL ACCOUNT 
+# TO INTEGRATE YOUR GMAIL ACCOUNT 
 Integrating Gmail for Sending Emails
 To enable email functionality in this project using Gmail, follow these steps:
 
@@ -181,7 +180,7 @@ Log in with your Google account.
     }
 }
 ```
-### REDIS SETUP AND TESTING
+# REDIS SETUP AND TESTING
 1. **Install Redis:**
    On Ubuntu/Debian:
    ```bash
