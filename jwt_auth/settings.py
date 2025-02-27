@@ -29,13 +29,18 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 FRONTEND_URL = os.getenv("FRONTEND_URL")
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
+REDIS_URL = os.getenv("REDIS_URL")
+DEBUG = os.getenv("DEBUG")
 
 # Default value for FRONTEND_URL if not set in .env (optional)
 if not FRONTEND_URL:
     FRONTEND_URL = "http://localhost:8000"
 
+if not REDIS_URL:
+    REDIS_URL = "redis://127.0.0.1:6379/1"
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -65,6 +70,7 @@ THIRD_PARTY_APPS = [
 CUSTOM_APPS = [
     "authentication",  # Custom authentication app
     "GoogleAuth",  # Custom Google authentication app
+    "products",  # Custom products app
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
@@ -165,6 +171,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",  # Use JWT for authentication
     ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",  # Default pagination
+    "PAGE_SIZE": 10,
 }
 
 # Simple JWT settings
@@ -201,3 +209,14 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+
+# REDIS SETTINGS
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}

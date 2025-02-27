@@ -5,6 +5,7 @@ from authentication.views import (SendPasswordResetEmailView,
                                   UserChangePasswordView, UserLoginView,
                                   UserLogoutView, UserPasswordResetView,
                                   UserProfileView, UserRegistrationView)
+from products.views import ProductDetailView, ProductListView
 
 urlpatterns = [
     path("user/token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
@@ -31,4 +32,9 @@ urlpatterns += [
         "user/changepassword/", UserChangePasswordView.as_view(), name="changepassword"
     ),
     path("user/logout/", UserLogoutView.as_view(), name="user-logout"),
+]
+
+urlpatterns += [
+    path("products/", ProductListView.as_view(), name="product-list"),
+    path("products/<int:pk>/", ProductDetailView.as_view(), name="product-detail"),
 ]

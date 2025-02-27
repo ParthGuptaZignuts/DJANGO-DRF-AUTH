@@ -1,6 +1,6 @@
-# DJANGO-DRF-AUTH
+# DJANGO-DRF
 
-A simple Django project using Django Rest Framework (DRF) with JWT authentication. This project demonstrates how to set up a Django API with token-based authentication using Simple JWT and handle CORS issues.
+A simple Django project using Django Rest Framework (DRF) with JWT authentication. This project demonstrates how to set up a Django API with token-based authentication using Simple JWT and handle CORS issues and contains other important features that are mainly used in Django
 
 ## Table of Contents
 
@@ -9,6 +9,7 @@ A simple Django project using Django Rest Framework (DRF) with JWT authenticatio
 - [API Endpoints](#api-endpoints)
 - [To Integrate Your Gmail Account](#to-integrate-your-gmail-account) 
 - [Integrating Google Sign-In with Django](#integrating-google-sign-in-with-django)
+- [Redis Setup and Testing](#redis-setup-and-testing)
 
 ## Installation
 
@@ -180,3 +181,44 @@ Log in with your Google account.
     }
 }
 ```
+### REDIS SETUP AND TESTING
+1. **Install Redis:**
+   On Ubuntu/Debian:
+   ```bash
+   sudo apt-get install redis-server
+   ```
+
+   On macOS (using Homebrew):
+   ```bash
+   brew install redis
+   ```
+
+2. **Start Redis Server:**
+   On Ubuntu/Debian:
+   ```bash
+   sudo service redis-server start
+   ```
+
+   On macOS:
+   ```bash
+   brew services start redis
+   ```
+
+3. **Testing Redis:**
+   Open Django Shell:
+   ```bash
+   python manage.py shell
+   ```
+
+   Test Redis Cache:
+   ```bash
+   from django.core.cache import cache
+   cache.set('test_key', 'hello_redis', timeout=60)
+   print(cache.get('test_key'))
+   ```
+
+   Expected Output:
+   ```bash
+   hello_redis
+   ```
+   This confirms that Redis is correctly configured and working with your Django project.
