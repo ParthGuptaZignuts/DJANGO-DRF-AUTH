@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "4b30a332-8cae-412c-8a29-9e5120b9cd75",
-		"name": "DJANGO-DRF-JWT",
+		"name": "DJANGO-DRF",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "33205244"
 	},
@@ -126,6 +126,24 @@
 				},
 				{
 					"name": "user-login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();",
+									"if (responseData && responseData.data && responseData.data.token) {",
+									"    pm.environment.set('refresh_token', responseData.data.token.refresh);",
+									"    pm.environment.set('access_token', responseData.data.token.access);",
+									"} else {",
+									"    console.error('Token not found in the response.');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -236,6 +254,86 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"success\": true,\n    \"message\": \"Login Successful\",\n    \"data\": {\n        \"token\": {\n            \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczOTg4MjI1NSwiaWF0IjoxNzM5Nzk1ODU1LCJqdGkiOiI2ZDYxNWViYzJmYWI0ZDBkYTQwZWUxNzY2OTM3ZWQ4NiIsInVzZXJfaWQiOjN9.yDB3PHMMfg2Xs3rNddroQk84yIJ32zFjyug0ZA4na6I\",\n            \"access\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM5Nzk3NjU1LCJpYXQiOjE3Mzk3OTU4NTUsImp0aSI6IjgxMTRmZGZiMjBhODRmYjRhYTdmNDA5NWZjMmQzNmFmIiwidXNlcl9pZCI6M30.ChIgaskFn540chK5axm4XmZJJAIgV_QKPh2CkHoNMnY\"\n        }\n    }\n}"
+						},
+						{
+							"name": "success-admin-login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\" : \"admin@gmail.com\",\n    \"password\" : \"admin@123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/user/login/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"user",
+										"login",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 21 Feb 2025 12:41:52 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "555"
+								},
+								{
+									"key": "Vary",
+									"value": "origin"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Login Successful\",\n    \"data\": {\n        \"token\": {\n            \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0MDIyODExMiwiaWF0IjoxNzQwMTQxNzEyLCJqdGkiOiI5Y2ZmY2VkNDE2MDA0ODAzODY3NGZlY2M5NWE0OGFjYyIsInVzZXJfaWQiOjR9.runOqi11Yd3P7DyjBJO-alFOFe_6uT1TGAj-dEFr5oM\",\n            \"access\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTQzNTEyLCJpYXQiOjE3NDAxNDE3MTIsImp0aSI6ImZhZjY1YjJhODk0NzQ4NzViMGUzMzhkNTBkNDAzYjMyIiwidXNlcl9pZCI6NH0.HWAA7t2F0LA495N0ddVHPvmvq79i6-WFccjj6F8kgLk\"\n        }\n    }\n}"
 						}
 					]
 				},
@@ -908,6 +1006,723 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"success\": true,\n    \"message\": \"Password reset successfully\",\n    \"data\": {}\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "PRODUCTS",
+			"item": [
+				{
+					"name": "create-products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTQyNjk2LCJpYXQiOjE3NDAxNDA4OTYsImp0aSI6ImZjMzY2ZDk4OTk5NDQ0OWViZGQwNzU5NmMyYzVhNTc2IiwidXNlcl9pZCI6NH0.ymxnq3BXaP2uJ8vDPF1yYn14MVGXsfQ096-PE2FltDg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"3 Name\",\n    \"description\": \"A description of the product.\",\n    \"price\": 99.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success-create-product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"3 Name\",\n    \"description\": \"A description of the product.\",\n    \"price\": 99.99\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/products/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"products",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 21 Feb 2025 12:32:45 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, POST, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "237"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Product created successfully\",\n    \"data\": {\n        \"id\": 4,\n        \"name\": \"3 Name\",\n        \"description\": \"A description of the product.\",\n        \"price\": \"99.99\",\n        \"created_at\": \"2025-02-21T12:32:45.110628Z\",\n        \"updated_at\": \"2025-02-21T12:32:45.110661Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get-products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success-get-products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/products/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"products",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 06:14:11 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, POST, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "765"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Products fetched successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Product Name\",\n            \"description\": \"A description of the product.\",\n            \"price\": \"99.99\",\n            \"created_at\": \"2025-02-21T11:33:04.920570Z\",\n            \"updated_at\": \"2025-02-21T11:33:04.920621Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"1 Name\",\n            \"description\": \"A description of the product.\",\n            \"price\": \"99.99\",\n            \"created_at\": \"2025-02-21T11:44:50.834053Z\",\n            \"updated_at\": \"2025-02-21T11:44:50.834083Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"2 Name\",\n            \"description\": \"A description of the product.\",\n            \"price\": \"99.99\",\n            \"created_at\": \"2025-02-21T11:48:45.312355Z\",\n            \"updated_at\": \"2025-02-21T11:48:45.312426Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"3 Name\",\n            \"description\": \"A description of the product.\",\n            \"price\": \"99.99\",\n            \"created_at\": \"2025-02-21T12:32:45.110628Z\",\n            \"updated_at\": \"2025-02-21T12:32:45.110661Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "sucess-get-products-with-pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/products/?page=100",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 07:46:38 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, POST, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2314"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 1004,\n    \"next\": \"http://127.0.0.1:8000/api/products/?page=101\",\n    \"previous\": \"http://127.0.0.1:8000/api/products/?page=99\",\n    \"results\": [\n        {\n            \"id\": 991,\n            \"name\": \"Short Baby\",\n            \"description\": \"Weight center career impact owner forward hand lay family feeling image.\",\n            \"price\": \"33.68\",\n            \"created_at\": \"2025-02-27T06:47:52.568453Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.568460Z\"\n        },\n        {\n            \"id\": 992,\n            \"name\": \"Spring Ground\",\n            \"description\": \"Report consumer the full PM until produce.\",\n            \"price\": \"354.85\",\n            \"created_at\": \"2025-02-27T06:47:52.568475Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.568482Z\"\n        },\n        {\n            \"id\": 993,\n            \"name\": \"Others Assume\",\n            \"description\": \"Water all edge assume serious month area interview most begin.\",\n            \"price\": \"82.67\",\n            \"created_at\": \"2025-02-27T06:47:52.568497Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.568504Z\"\n        },\n        {\n            \"id\": 994,\n            \"name\": \"Fight Third\",\n            \"description\": \"Head guess decade per find south professor carry be.\",\n            \"price\": \"340.46\",\n            \"created_at\": \"2025-02-27T06:47:52.568518Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.568526Z\"\n        },\n        {\n            \"id\": 995,\n            \"name\": \"Increase Level\",\n            \"description\": \"Visit Congress account increase leader blue buy would material school food design.\",\n            \"price\": \"188.43\",\n            \"created_at\": \"2025-02-27T06:47:52.568540Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.568547Z\"\n        },\n        {\n            \"id\": 996,\n            \"name\": \"Old Letter\",\n            \"description\": \"Add scene order add score win feel majority budget speech choice recognize.\",\n            \"price\": \"190.20\",\n            \"created_at\": \"2025-02-27T06:47:52.568562Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.568569Z\"\n        },\n        {\n            \"id\": 997,\n            \"name\": \"Key Group\",\n            \"description\": \"Common move under room threat alone child control water.\",\n            \"price\": \"265.90\",\n            \"created_at\": \"2025-02-27T06:47:52.568584Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.568591Z\"\n        },\n        {\n            \"id\": 998,\n            \"name\": \"Through Race\",\n            \"description\": \"Month place land either around public from never share newspaper put defense factor.\",\n            \"price\": \"461.79\",\n            \"created_at\": \"2025-02-27T06:47:52.568605Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.568613Z\"\n        },\n        {\n            \"id\": 999,\n            \"name\": \"Experience During\",\n            \"description\": \"Follow during rich safe pull identify off between exist theory long force chair.\",\n            \"price\": \"190.53\",\n            \"created_at\": \"2025-02-27T06:47:52.568627Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.568634Z\"\n        },\n        {\n            \"id\": 1000,\n            \"name\": \"Place Society\",\n            \"description\": \"Society building foot federal almost ask.\",\n            \"price\": \"100.29\",\n            \"created_at\": \"2025-02-27T06:47:52.572030Z\",\n            \"updated_at\": \"2025-02-27T06:47:52.572048Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "get-product-individual",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/100/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"100",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success-get-individual-product",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/products/100/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"products",
+										"100",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 09:13:41 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "270"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Product details fetched successfully\",\n    \"data\": {\n        \"id\": 100,\n        \"name\": \"Several Resource\",\n        \"description\": \"His skin soon report son ground trip tax.\",\n        \"price\": \"466.84\",\n        \"created_at\": \"2025-02-27T06:47:52.526852Z\",\n        \"updated_at\": \"2025-02-27T06:47:52.526860Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update-product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"edited by me\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/100/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"100",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success-update-product",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"edited by me\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/products/100/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"products",
+										"100",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 09:19:26 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "258"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Product updated successfully\",\n    \"data\": {\n        \"id\": 100,\n        \"name\": \"edited by me\",\n        \"description\": \"His skin soon report son ground trip tax.\",\n        \"price\": \"466.84\",\n        \"created_at\": \"2025-02-27T06:47:52.526852Z\",\n        \"updated_at\": \"2025-02-27T09:19:26.169881Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete-product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"edited by me\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/2/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"2",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success-delete-product",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"edited by me\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/products/2/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"products",
+										"2",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 09:25:24 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.12.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Product deleted successfully\",\n    \"data\": {}\n}"
 						}
 					]
 				}
